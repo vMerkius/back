@@ -10,7 +10,7 @@ const stripe = require('stripe')(
 );
 const endpointSecret =
   'whsec_8a11da344c6fda38c001d9c5204c52a0f04ef17fdd808e01b6cf815650ae815d';
-const URL = 'https://boosters-6o9zbxwis-merkius-projects.vercel.app/';
+const URL = 'https://boosters-6o9zbxwis-merkius-projects.vercel.app';
 exports.createCheckoutSession = async (req, res, next) => {
   let token;
   if (req.cookies.jwt) {

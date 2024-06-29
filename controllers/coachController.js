@@ -2,6 +2,7 @@ const Coach = require('../models/coachModel');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const URL = 'https://boosters-6o9zbxwis-merkius-projects.vercel.app';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -75,7 +76,7 @@ exports.getAllCoaches = async (req, res) => {
     const coaches = await Coach.find();
     const responseCoaches = coaches.map((coach) => ({
       ...coach.toObject(),
-      imageUrl: coach.image ? `http://localhost:3000/${coach.image}` : null,
+      imageUrl: coach.image ? `${URL}/${coach.image}` : null,
     }));
 
     res.status(200).json({
@@ -129,7 +130,7 @@ exports.getCoachesPaging = async (req, res) => {
 
     const responseCoaches = coaches.map((coach) => ({
       ...coach.toObject(),
-      imageUrl: coach.image ? `http://localhost:3000/${coach.image}` : null,
+      imageUrl: coach.image ? `${URL}/${coach.image}` : null,
     }));
 
     const totalCoaches = await Coach.countDocuments(filter);
@@ -161,7 +162,7 @@ exports.getCoachById = async (req, res) => {
     }
     const responseCoach = {
       ...coach.toObject(),
-      imageUrl: coach.image ? `http://localhost:3000/${coach.image}` : null,
+      imageUrl: coach.image ? `${URL}/${coach.image}` : null,
     };
     res.status(200).json({
       status: 'success',
@@ -185,7 +186,7 @@ exports.getRecommended = async (req, res) => {
     ]);
     const responseCoaches = coaches.map((coach) => ({
       ...coach,
-      imageUrl: coach.image ? `http://localhost:3000/${coach.image}` : null,
+      imageUrl: coach.image ? `${URL}/${coach.image}` : null,
     }));
 
     res.status(200).json({

@@ -45,7 +45,7 @@ const app = express();
 app.set('trust proxy', 'loopback');
 
 const allowedOrigins = [
-  'https://boosters-gjwhyfub5-merkius-projects.vercel.app',
+  'https://boosters-6o9zbxwis-merkius-projects.vercel.app/',
 ];
 
 const corsOptions = {

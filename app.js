@@ -42,7 +42,7 @@ const corsOptions = {
 
 const app = express();
 
-app.set('trust proxy', true);
+app.set('trust proxy', 'loopback');
 
 // app.use(cors(corsOptions));
 app.use(cors()); // Ustawienie CORS na akceptowanie wszystkich pochodzeń
@@ -69,6 +69,8 @@ const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour!',
+  skipFailedRequests: true,
+  keyGenerator: (req, res) => req.ip,
 });
 app.use('/api', limiter);
 

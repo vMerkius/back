@@ -25,27 +25,45 @@ const swaggerDocument = require('./swagger');
 //   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 // };
 
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (!origin) {
+//       return callback(null, true);
+//     }
+//     if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+//       return callback(null, true);
+//     }
+//     return callback(new Error('Not allowed by CORS'));
+//   },
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
+//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+// };
+
+const app = express();
+
+app.set('trust proxy', 'loopback');
+
+const allowedOrigins = [
+  'https://boosters-56bkj5ipf-merkius-projects.vercel.app',
+];
+
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin) {
-      return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-      return callback(null, true);
-    }
-    return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 };
 
-const app = express();
-
-app.set('trust proxy', 'loopback');
-
+app.use(cors(corsOptions)); // Ustawienie CORS na akceptowanie wybranych pochodzeń
 // app.use(cors(corsOptions));
-app.use(cors()); // Ustawienie CORS na akceptowanie wszystkich pochodzeń
+// app.use(cors()); // Ustawienie CORS na akceptowanie wszystkich pochodzeń
 
 app.options('*', cors(corsOptions)); // Obsługa preflight requests
 

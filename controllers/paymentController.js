@@ -10,7 +10,7 @@ const stripe = require('stripe')(
 );
 const endpointSecret =
   'whsec_8a11da344c6fda38c001d9c5204c52a0f04ef17fdd808e01b6cf815650ae815d';
-
+const URL = 'https://boosters-56bkj5ipf-merkius-projects.vercel.app';
 exports.createCheckoutSession = async (req, res, next) => {
   let token;
   if (req.cookies.jwt) {
@@ -56,8 +56,10 @@ exports.createCheckoutSession = async (req, res, next) => {
       },
     ],
     mode: 'payment',
-    success_url: `http://localhost:5173/payment?success=true`,
-    cancel_url: `http://localhost:5173/payment?canceled=true`,
+    success_url: `${URL}/payment?success=true`,
+    cancel_url: `${URL}/payment?canceled=true`,
+    // success_url: `http://localhost:5173/payment?success=true`,
+    // cancel_url: `http://localhost:5173/payment?canceled=true`,
     metadata: {
       body: JSON.stringify(data),
       userId: userId,

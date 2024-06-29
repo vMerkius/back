@@ -2,7 +2,7 @@ const Coach = require('../models/coachModel');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-const URL = 'https://boosters-6o9zbxwis-merkius-projects.vercel.app';
+const URL = 'https://back-b-kzfc.onrender.com';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

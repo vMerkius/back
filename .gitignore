@@ -1,0 +1,23 @@
+# Zależności
+node_modules/
+
+# Logi
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Katalogi runtime
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Katalogi produkcyjne
+build/
+dist/
+
+# Instalacje npm
+.npm
+.vercel

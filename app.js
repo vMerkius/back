@@ -44,9 +44,7 @@ const app = express();
 
 app.set('trust proxy', 'loopback');
 
-const allowedOrigins = [
-  'https://boosters-6o9zbxwis-merkius-projects.vercel.app',
-];
+const allowedOrigins = ['https://front-b.onrender.com'];
 
 const corsOptions = {
   origin: (origin, callback) => {

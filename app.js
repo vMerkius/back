@@ -70,12 +70,13 @@ app.options('*', cors(corsOptions)); // Obsługa preflight requests
 app.use(
   '/uploads',
   (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', 'https://front-b.onrender.com');
     res.header(
       'Access-Control-Allow-Methods',
       'GET, POST, PUT, PATCH, DELETE, OPTIONS'
     );
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true'); // Dodaj ten nagłówek, jeśli używasz poświadczeń
     next();
   },
   express.static(path.join(__dirname, 'uploads'))

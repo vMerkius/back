@@ -15,28 +15,6 @@ const orderRouter = require('./routes/orderRoutes');
 const coachRouter = require('./routes/coachRoutes');
 const cors = require('cors');
 
-// const corsOptions = {
-//   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
-//   credentials: true,
-//   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
-//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-// };
-
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (!origin) {
-//       return callback(null, true);
-//     }
-//     if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
-//       return callback(null, true);
-//     }
-//     return callback(new Error('Not allowed by CORS'));
-//   },
-//   credentials: true,
-//   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
-//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-// };
-
 const app = express();
 
 app.set('trust proxy', 'loopback');
@@ -46,27 +24,20 @@ const allowedOrigins = [
   'https://front-b.onrender.com',
 ];
 
-// const corsOptions = {
-//   origin: (origin, callback) => {
-//     if (allowedOrigins.includes(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true,
-//   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
-//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-// };
 const corsOptions = {
-  origin: '*',
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 };
 
 app.use(cors(corsOptions)); // Ustawienie CORS na akceptowanie wybranych pochodzeń
-// app.use(cors(corsOptions));
 // app.use(cors()); // Ustawienie CORS na akceptowanie wszystkich pochodzeń
 
 app.options('*', cors(corsOptions)); // Obsługa preflight requests

@@ -8,8 +8,7 @@ const sendEmail = require('./../utils/email');
 const stripe = require('stripe')(
   'sk_test_51PKegpJgnjmSEwtWzSLGgusDnp4w9jqfNplnuREYazayY8Q5RlpjwoLGsWZtHwz3O5pjmHkzG7IqoPWuXAHv2HhR00AUbWvaH8'
 );
-const endpointSecret =
-  'whsec_8a11da344c6fda38c001d9c5204c52a0f04ef17fdd808e01b6cf815650ae815d';
+const endpointSecret = 'we_1PZJ2PJgnjmSEwtW3sggj6oN';
 const URL = 'https://front-b.onrender.com';
 exports.createCheckoutSession = async (req, res, next) => {
   let token;

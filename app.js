@@ -51,6 +51,7 @@ app.use(
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
       res.header('Access-Control-Allow-Origin', origin);
+      console.log('Access-Control-Allow-Origin:', origin);
     }
     res.header(
       'Access-Control-Allow-Methods',
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use((err, req, res, next) => {
+  console.error('Error:', err.message);
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });

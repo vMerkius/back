@@ -15,9 +15,6 @@ const orderRouter = require('./routes/orderRoutes');
 const coachRouter = require('./routes/coachRoutes');
 const cors = require('cors');
 
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger');
-
 // const corsOptions = {
 //   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
 //   credentials: true,
@@ -63,13 +60,12 @@ app.set('trust proxy', 'loopback');
 // app.use(cors(corsOptions));
 app.use(cors()); // Ustawienie CORS na akceptowanie wszystkich pochodzeń
 
-app.options('*', cors(corsOptions)); // Obsługa preflight requests
+// app.options('*', cors(corsOptions)); // Obsługa preflight requests
+app.options('*', cors()); // Obsługa preflight requests
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(cookieParser());
-
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // 1) GLOBAL MIDDLEWARES
 // Set security HTTP headers

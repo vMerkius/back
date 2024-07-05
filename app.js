@@ -66,7 +66,20 @@ app.use(cors(corsOptions)); // Ustawienie CORS na akceptowanie wybranych pochodz
 app.options('*', cors(corsOptions)); // Obsługa preflight requests
 // app.options('*', cors()); // Obsługa preflight requests
 
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(
+  '/uploads',
+  (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header(
+      'Access-Control-Allow-Methods',
+      'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+    );
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  },
+  express.static(path.join(__dirname, 'uploads'))
+);
 
 app.use(cookieParser());
 

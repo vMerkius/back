@@ -82,6 +82,7 @@ exports.webhookCheckout = async (req, res) => {
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
+  console.log('Webhook event received:', event);
 
   switch (event.type) {
     case 'checkout.session.completed':
@@ -90,7 +91,8 @@ exports.webhookCheckout = async (req, res) => {
       const name = checkout.customer_details.name;
       const data = JSON.parse(checkout.metadata.body);
       const userId = checkout.metadata.userId;
-      console.log('data', data);
+      console.log('Checkout session completed:', data);
+
       const message = `Thank you for your order ${name}. We've received your payment.
         We appreciate that you've chosen Boosters Den for serving your needs.
         If you've any questions or need further assistance, contact our team on Discord
@@ -106,7 +108,6 @@ exports.webhookCheckout = async (req, res) => {
       });
 
       if (data.boostType) {
-        console.log('boostType');
         const {
           boostType,
           rankCurrent,
@@ -151,11 +152,10 @@ exports.webhookCheckout = async (req, res) => {
           discountFinal,
           totalPrice,
         });
-        console.log('newBoostOrder', newBoostOrder);
 
         try {
           await newBoostOrder.save();
-          console.log('newBoostOrder', newBoostOrder);
+          console.log('Checkout session completed:', data);
         } catch (err) {
           console.error('Error creating boost order:', err);
           return res.status(400).json({

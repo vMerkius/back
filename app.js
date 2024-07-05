@@ -22,7 +22,6 @@ app.set('trust proxy', 'loopback');
 const allowedOrigins = [
   'http://localhost:5173',
   'https://front-b.onrender.com',
-  'https://front-b.onrender.com/',
 ];
 
 const corsOptions = {
@@ -30,7 +29,6 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log('Origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -52,7 +50,6 @@ app.use(
     const origin = req.headers.origin;
     if (allowedOrigins.includes(origin)) {
       res.header('Access-Control-Allow-Origin', origin);
-      console.log('Access-Control-Allow-Origin:', origin);
     }
     res.header(
       'Access-Control-Allow-Methods',

@@ -48,13 +48,16 @@ app.options('*', cors(corsOptions)); // Obsługa preflight requests
 app.use(
   '/uploads',
   (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.header('Access-Control-Allow-Origin', origin);
+    }
     res.header(
       'Access-Control-Allow-Methods',
       'GET, POST, PUT, PATCH, DELETE, OPTIONS'
     );
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.header('Access-Control-Allow-Credentials', 'true'); // Dodaj ten nagłówek, jeśli używasz poświadczeń
+    res.header('Access-Control-Allow-Credentials', 'true');
     next();
   },
   express.static(path.join(__dirname, 'uploads'))
@@ -63,6 +66,10 @@ app.use((req, res, next) => {
   console.log('Origin:', req.headers.origin);
   console.log('Referer:', req.headers.referer);
   next();
+});
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 app.use(cookieParser());

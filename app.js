@@ -46,14 +46,20 @@ const allowedOrigins = [
   'https://front-b.onrender.com',
 ];
 
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
+//   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+// };
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*',
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'Set-Cookie'],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
@@ -70,7 +76,7 @@ app.options('*', cors(corsOptions)); // Obsługa preflight requests
 app.use(
   '/uploads',
   (req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'https://front-b.onrender.com');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header(
       'Access-Control-Allow-Methods',
       'GET, POST, PUT, PATCH, DELETE, OPTIONS'

@@ -54,10 +54,17 @@ exports.signup = catchAsync(async (req, res, next) => {
     console.log('Sending email');
     const url = `https://back-b-kzfc.onrender.com/api/v1/users/verify/${verificationToken}`;
 
+    // await sendEmail({
+    //   email: newUser.email,
+    //   subject: 'Verify Your Account',
+    //   html: `Click <a href = '${url}'>here</a> to confirm your email.`,
+    // });
     await sendEmail({
       email: newUser.email,
+      fullName: newUser.name, // Dodano pełną nazwę, która jest wymagana przez MailerSend
       subject: 'Verify Your Account',
-      html: `Click <a href = '${url}'>here</a> to confirm your email.`,
+      html: `Click <a href='${url}'>here</a> to confirm your email.`,
+      message: 'Verify your account',
     });
     console.log('Email sent');
 

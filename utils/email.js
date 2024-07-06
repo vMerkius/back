@@ -23,7 +23,7 @@ const sendEmail = async (options) => {
 
   console.log('Sending email to:', options.email);
 
-  console.log('setFrom', emailParams.sentFrom);
+  console.log('setFrom', emailParams.setFrom);
   console.log('setTo', emailParams.setTo);
   console.log('setReplyTo', emailParams.setReplyTo);
   console.log('setSubject', emailParams.setSubject);

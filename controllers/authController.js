@@ -49,7 +49,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const verificationToken = signToken(newUser._id);
 
   try {
-    const url = `http://localhost:3000/api/v1/users/verify/${verificationToken}`;
+    const url = `https://back-b-kzfc.onrender.com//api/v1/users/verify/${verificationToken}`;
 
     await sendEmail({
       email: newUser.email,
@@ -106,7 +106,7 @@ exports.verify = catchAsync(async (req, res, next) => {
     });
   }
 
-  res.redirect(303, `http://localhost:5173/verified`);
+  res.redirect(303, `https://front-b.onrender.com/verified`);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {

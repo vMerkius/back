@@ -61,10 +61,7 @@ app.use(
   },
   express.static(path.join(__dirname, 'uploads'))
 );
-app.use((req, res, next) => {
-  console.log('logger');
-  next();
-});
+
 app.use((req, res, next) => {
   console.log('Origin:', req.headers.origin);
   console.log('Referer:', req.headers.referer);

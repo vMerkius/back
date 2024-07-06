@@ -49,13 +49,15 @@ exports.signup = catchAsync(async (req, res, next) => {
   const verificationToken = signToken(newUser._id);
 
   try {
-    const url = `https://back-b-kzfc.onrender.com//api/v1/users/verify/${verificationToken}`;
+    console.log('Sending email');
+    const url = `https://back-b-kzfc.onrender.com/api/v1/users/verify/${verificationToken}`;
 
     await sendEmail({
       email: newUser.email,
       subject: 'Verify Your Account',
       html: `Click <a href = '${url}'>here</a> to confirm your email.`,
     });
+    console.log('Email sent');
 
     res.status(200).json({
       status: 'success',

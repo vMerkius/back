@@ -55,7 +55,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     const url = `https://back-b-kzfc.onrender.com/api/v1/users/verify/${verificationToken}`;
 
     await sendEmail({
-      email: newUser.email,
+      email: email,
       subject: 'Verify Your Account',
       html: `Click <a href = '${url}'>here</a> to confirm your email.`,
     });

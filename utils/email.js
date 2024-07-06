@@ -23,7 +23,18 @@ const sendEmail = async (options) => {
 
   console.log('Sending email to:', options.email);
 
-  await mailerSend.email.send(emailParams);
+  console.log('setFrom', emailParams.sentFrom);
+  console.log('setTo', emailParams.setTo);
+  console.log('setReplyTo', emailParams.setReplyTo);
+  console.log('setSubject', emailParams.setSubject);
+  console.log('setHtml', emailParams.setHtml);
+  console.log('setText', emailParams.setText);
+
+  try {
+    await mailerSend.email.send(emailParams);
+  } catch (err) {
+    console.log('Error sending email:', err);
+  }
 };
 
 module.exports = sendEmail;

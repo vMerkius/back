@@ -48,6 +48,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: password,
   });
   const verificationToken = signToken(newUser._id);
+  console.log('Verification token:', verificationToken);
 
   try {
     console.log('Sending email');

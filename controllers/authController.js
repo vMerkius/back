@@ -40,11 +40,11 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  const {name, email, password} = req.body;
+  const { name, email, password } = req.body;
   const newUser = await User.create({
     name: name,
     email: email,
-    password: password
+    password: password,
   });
   const verificationToken = signToken(newUser._id);
 
@@ -54,12 +54,13 @@ exports.signup = catchAsync(async (req, res, next) => {
     await sendEmail({
       email: newUser.email,
       subject: 'Verify Your Account',
-      html: `Click <a href = '${url}'>here</a> to confirm your email.`
+      html: `Click <a href = '${url}'>here</a> to confirm your email.`,
     });
 
     res.status(200).json({
       status: 'success',
-      message: 'Activate your account by opening confirmation link sent to your email address',
+      message:
+        'Activate your account by opening confirmation link sent to your email address',
     });
   } catch (err) {
     return next(
@@ -81,9 +82,9 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  if (!user.active){
+  if (!user.active) {
     return next(new AppError('Your Email has not been verified'), 403);
-  } 
+  }
 
   createSendToken(user, 200, res);
 });
@@ -91,23 +92,20 @@ exports.login = catchAsync(async (req, res, next) => {
 exports.verify = catchAsync(async (req, res, next) => {
   const token = req.params.id;
   if (!token) {
-    return res.status(422).send({ 
-      message: "Missing Token" 
+    return res.status(422).send({
+      message: 'Missing Token',
     });
   }
 
-  const { id } = jwt.verify(
-    token,
-    process.env.JWT_SECRET
-  );
-  
-  const updatedUser = await User.findByIdAndUpdate(id, {active: true});
+  const { id } = jwt.verify(token, process.env.JWT_SECRET);
+
+  const updatedUser = await User.findByIdAndUpdate(id, { active: true });
   if (!updatedUser) {
-    return res.status(404).send({ 
-      message: "User Not Found" 
+    return res.status(404).send({
+      message: 'User Not Found',
     });
   }
-  
+
   res.redirect(303, `http://localhost:5173/verified`);
 });
 
@@ -311,6 +309,7 @@ exports.logout = (req, res) => {
 
 exports.googleLogin = async (req, res) => {
   const { email, name, picture } = req.body;
+  console.log('Google login request', req.body);
 
   try {
     let user = await User.findOne({ email });

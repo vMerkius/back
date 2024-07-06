@@ -66,6 +66,11 @@ app.use((req, res, next) => {
   console.log('Referer:', req.headers.referer);
   next();
 });
+app.use((req, res, next) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+  next();
+});
 app.use((err, req, res, next) => {
   console.error('Error:', err.message);
   console.error(err.stack);

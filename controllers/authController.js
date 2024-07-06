@@ -57,7 +57,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     await sendEmail({
       email: email,
       subject: 'Verify Your Account',
-      message: `Please click on the link below to verify your account: ${url}`,
+      message: `Please click on the link below to verify your account: ${url}`
     });
     console.log('Email sent');
 

@@ -4,6 +4,7 @@ const Coach = require('../models/coachModel');
 const calculatePrice = require('./../utils/calculate');
 const calculateCoachPrice = require('../utils/calculateCoach');
 const discountCode = require('../utils/discount');
+const calculateTftPrice = require('../utils/calculateTft');
 
 exports.price = async (req, res, next) => {
   try {
@@ -27,6 +28,23 @@ exports.price = async (req, res, next) => {
 exports.priceCoach = async (req, res, next) => {
   try {
     const { price, totalPrice, discountFinal } = await calculateCoachPrice(
+      req.body
+    );
+    res.status(200).json({
+      status: 200,
+      data: {
+        price: price,
+        totalPrice: totalPrice,
+        discount: discountFinal,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+exports.priceTft = async (req, res, next) => {
+  try {
+    const { price, totalPrice, discountFinal } = await calculateTftPrice(
       req.body
     );
     res.status(200).json({

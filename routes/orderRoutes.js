@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/price', orderController.price);
 router.post('/priceCoach', orderController.priceCoach);
+router.post('/priceTft', orderController.priceTft);
 
 router.post('/orderCoach', orderController.orderCoach);
 router.post('/checkDiscount', orderController.checkDiscount);

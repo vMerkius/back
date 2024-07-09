@@ -22,6 +22,8 @@ app.set('trust proxy', 'loopback');
 const allowedOrigins = [
   'http://localhost:5173',
   'https://front-b.onrender.com',
+  'https://www.boosters-den.com',
+  'https://boosters-den.com',
 ];
 
 const corsOptions = {

@@ -11,7 +11,9 @@ const stripe = require('stripe')(
   'sk_test_51PKegpJgnjmSEwtWzSLGgusDnp4w9jqfNplnuREYazayY8Q5RlpjwoLGsWZtHwz3O5pjmHkzG7IqoPWuXAHv2HhR00AUbWvaH8'
 );
 const endpointSecret = 'whsec_HXHBMnbgvq9MWYJrWy6U9fdnWSVP7ke2';
-const URL = 'https://front-b.onrender.com';
+// const URL = 'https://front-b.onrender.com';
+const URL = 'https://www.boosters-den.com';
+
 exports.createCheckoutSession = async (req, res, next) => {
   let token;
   if (req.cookies.jwt) {
@@ -168,7 +170,15 @@ exports.webhookCheckout = async (req, res) => {
         }
       } else if (data.hours) {
         console.log('coachType');
-        const { _id, hours, priority, server } = data;
+        const {
+          _id,
+          hours,
+          priority,
+          server,
+          price,
+          discountFinal,
+          totalPrice,
+        } = data;
         const coach = await Coach.findById(_id);
         if (!coach) {
           return res.status(404).json({
@@ -178,6 +188,9 @@ exports.webhookCheckout = async (req, res) => {
         }
 
         const newOrder = await coachOrderModel.create({
+          price,
+          discountFinal,
+          totalPrice,
           userId,
           coachId: _id,
           priority,

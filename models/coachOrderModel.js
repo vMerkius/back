@@ -7,6 +7,9 @@ const coachOrderSchema = new mongoose.Schema({
   server: { type: String, required: [true, 'Please provide a server'] },
   hours: { type: Number, required: [true, 'Please provide hours'] },
   done: { type: Boolean },
+  price: { type: Number },
+  discountFinal: { type: Number },
+  totalPrice: { type: Number },
 });
 
 const CoachOrder = mongoose.model('CoachOrder', coachOrderSchema);

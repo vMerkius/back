@@ -3,8 +3,10 @@ const calculateCoachPrice = require('./../utils/calculateCoach');
 const Coach = require('../models/coachModel');
 const coachOrderModel = require('../models/coachOrderModel');
 const boostOrderModel = require('../models/boostOrderModel');
+const tftOrderModel = require('../models/tftOrderModel');
 
 const sendEmail = require('./../utils/email');
+const calculateTftPrice = require('../utils/calculateTft');
 const stripe = require('stripe')(
   'sk_test_51PKegpJgnjmSEwtWzSLGgusDnp4w9jqfNplnuREYazayY8Q5RlpjwoLGsWZtHwz3O5pjmHkzG7IqoPWuXAHv2HhR00AUbWvaH8'
 );
@@ -33,11 +35,13 @@ exports.createCheckoutSession = async (req, res, next) => {
   let price, totalPrice, discountFinal;
 
   if (req.body.boostType) {
-    ({ price, totalPrice, discountFinal } = calculatePrice(req.body));
-  } else {
+    ({ price, totalPrice, discountFinal } = await calculatePrice(req.body));
+  } else if (req.body.hours) {
     ({ price, totalPrice, discountFinal } = await calculateCoachPrice(
       req.body
     ));
+  } else {
+    ({ price, totalPrice, discountFinal } = await calculateTftPrice(req.body));
   }
   const data = { ...req.body, price, totalPrice, discountFinal };
 
@@ -162,7 +166,7 @@ exports.webhookCheckout = async (req, res) => {
             message: err.message,
           });
         }
-      } else {
+      } else if (data.hours) {
         console.log('coachType');
         const { _id, hours, priority, server } = data;
         const coach = await Coach.findById(_id);
@@ -186,6 +190,47 @@ exports.webhookCheckout = async (req, res) => {
           console.log('newOrder', newOrder);
         } catch (err) {
           res.status(400).json({
+            status: 'fail',
+            message: err.message,
+          });
+        }
+      } else {
+        console.log('tft');
+        const {
+          rankCurrent,
+          rankDesired,
+          solo,
+          streamed,
+          chat,
+          priority,
+          additionalWin,
+          mmrs,
+          discount,
+          price,
+          discountFinal,
+          totalPrice,
+        } = data;
+        const newTftOrder = await tftOrderModel.create({
+          rankCurrent,
+          rankDesired,
+          solo,
+          streamed,
+          chat,
+          priority,
+          additionalWin,
+          mmrs,
+          discount,
+          price,
+          discountFinal,
+          totalPrice,
+        });
+
+        try {
+          await newTftOrder.save();
+          console.log('Checkout session completed:', data);
+        } catch (err) {
+          console.error('Error creating boost order:', err);
+          return res.status(400).json({
             status: 'fail',
             message: err.message,
           });

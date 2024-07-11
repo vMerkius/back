@@ -13,6 +13,7 @@ const stripe = require('stripe')(
 const endpointSecret = 'whsec_HXHBMnbgvq9MWYJrWy6U9fdnWSVP7ke2';
 // const URL = 'https://front-b.onrender.com';
 const URL = 'https://www.boosters-den.com';
+const BASE_URL = process.env.BASE_URL;
 
 exports.createCheckoutSession = async (req, res, next) => {
   let token;
@@ -61,17 +62,13 @@ exports.createCheckoutSession = async (req, res, next) => {
       },
     ],
     mode: 'payment',
-    success_url: `${URL}/payment?success=true`,
-    cancel_url: `${URL}/payment?canceled=true`,
-    // success_url: `http://localhost:5173/payment?success=true`,
-    // cancel_url: `http://localhost:5173/payment?canceled=true`,
+    success_url: `${BASE_URL}/payment?success=true`,
+    cancel_url: `${BASE_URL}/payment?canceled=true`,
     metadata: {
       body: JSON.stringify(data),
       userId: userId,
     },
   });
-  // res.redirect(303, session.url);
-  // console.log('Created session:', session);
 
   res.json({ url: session.url });
 };

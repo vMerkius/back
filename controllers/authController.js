@@ -5,6 +5,8 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
+const SERVER_URL = process.env.SERVER_URL;
+const BASE_URL = process.env.BASE_URL;
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -52,7 +54,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   try {
     console.log('Sending email');
-    const url = `https://back-b-kzfc.onrender.com/api/v1/users/verify/${verificationToken}`;
+    const url = `${SERVER_URL}/api/v1/users/verify/${verificationToken}`;
 
     await sendEmail({
       email: email,
@@ -111,7 +113,7 @@ exports.verify = catchAsync(async (req, res, next) => {
     });
   }
 
-  res.redirect(303, `https://front-b.onrender.com/verified`);
+  res.redirect(303, `${BASE_URL}/verified`);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -181,7 +183,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-  const resetURL = `https://front-b.onrender.com/new-password/${resetToken}`;
+  const resetURL = `${BASE_URL}/new-password/${resetToken}`;
 
   const message = `Forgot your password? Set your new password here: ${resetURL}\nIf you didn't request password reset, please ignore this email!`;
 
@@ -326,16 +328,6 @@ exports.googleLogin = async (req, res) => {
       });
     }
     createSendToken(user, 200, res);
-
-    // const token = signToken(user._id);
-
-    // res.status(200).json({
-    //   status: 'success',
-    //   token,
-    //   data: {
-    //     user,
-    //   },
-    // });
   } catch (err) {
     console.error('Error logging in with Google', err);
     res.status(500).json({

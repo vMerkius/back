@@ -11,8 +11,7 @@ const stripe = require('stripe')(
   'sk_test_51PKegpJgnjmSEwtWzSLGgusDnp4w9jqfNplnuREYazayY8Q5RlpjwoLGsWZtHwz3O5pjmHkzG7IqoPWuXAHv2HhR00AUbWvaH8'
 );
 const endpointSecret = 'whsec_HXHBMnbgvq9MWYJrWy6U9fdnWSVP7ke2';
-// const URL = 'https://front-b.onrender.com';
-const URL = 'https://www.boosters-den.com';
+
 const BASE_URL = process.env.BASE_URL;
 
 exports.createCheckoutSession = async (req, res, next) => {

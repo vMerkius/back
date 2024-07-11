@@ -1,9 +1,9 @@
 const mailer = require('mailersend');
+const MAIL_API_KEY = process.env.MAIL_API_KEY;
 
 const sendEmail = async (options) => {
   const mailerSend = new mailer.MailerSend({
-    apiKey:
-      'mlsn.09cfa6d86e554dbced470a7c8de40d02cc1c16c9c8f01ab4a34d78a1970bcc88',
+    apiKey: MAIL_API_KEY,
   });
 
   const sentFrom = new mailer.Sender(

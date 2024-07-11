@@ -1,16 +1,35 @@
 const mongoose = require('mongoose');
 
 const tftOrderSchema = new mongoose.Schema({
-  name: { type: String, required: [true, 'Please provide a coach name'] },
-  game: { type: String, required: [true, 'Please provide a game'] },
-  rank: { type: String, required: [true, 'Please provide a coach rank'] },
-  lanes: [{ type: String }],
-  champions: [{ type: String }],
-  rating: { type: Number, required: [true, 'Please provide a rating'] },
-  language: [{ type: String, required: [true, 'Please provide a language'] }],
-  recommended: { type: Boolean },
-  image: { type: String },
+  rankCurrent: {
+    rank: { type: String, required: [true, 'Please provide a current rank'] },
+    division: {
+      type: String,
+      required: [true, 'Please provide a current division'],
+    },
+    lp: {
+      type: String,
+      required: [true, 'Please provide current league points'],
+    },
+  },
+  rankDesired: {
+    rank: { type: String, required: [true, 'Please provide a desired rank'] },
+    division: {
+      type: String,
+      required: [true, 'Please provide a desired division'],
+    },
+    lp: { type: String },
+  },
+  solo: { type: Boolean, required: true },
+  streamed: { type: Boolean },
+  chat: { type: Boolean },
+  priority: { type: Boolean },
+  additionalWin: { type: Boolean },
+  mmrs: { type: String },
+  discount: { type: String },
   price: { type: Number, required: [true, 'Please provide a price'] },
+  discountFinal: { type: Number },
+  totalPrice: { type: Number },
 });
 
 const TftOrder = mongoose.model('TftOrder', tftOrderSchema);

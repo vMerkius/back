@@ -20,7 +20,6 @@ const tftOrderSchema = new mongoose.Schema({
     },
     lp: { type: String },
   },
-  solo: { type: Boolean, required: true },
   streamed: { type: Boolean },
   chat: { type: Boolean },
   priority: { type: Boolean },

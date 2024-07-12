@@ -107,17 +107,15 @@ const calculatePrice = (data) => {
 
   switch (boostType) {
     case 'divisions':
-      console.log('indexDesired', indexDesired);
       let last = Object.keys(boostPerGamePrice).length - 1;
-      console.log(' boostPerGamePrice.length - 1 ', last);
-      console.log('rankDesired.lp', rankDesired.lp);
 
       if (
         indexDesired === Object.keys(boostPerGamePrice).length - 1 &&
+        indexCurrent === Object.keys(boostPerGamePrice).length - 1 &&
         rankDesired.lp > 0
       ) {
         mmrsGame = mmrsFinal + 2;
-        games = Math.ceil(rankDesired.lp / mmrsGame);
+        games = Math.ceil((rankDesired.lp - rankCurrent.lp) / mmrsGame);
         totalPrice += games * boostPerGamePrice[currentToKey];
         console.log('totaslPrice1', totalPrice);
         console.log('games', games);
@@ -125,6 +123,11 @@ const calculatePrice = (data) => {
         console.log('totalPrice', totalPrice);
       }
       if (rankCurrent.rank === 'Master' && rankDesired.rank === 'Master') {
+        mmrsGame = mmrsFinal + 2;
+        games = Math.ceil((rankDesired.lp - rankCurrent.lp) / mmrsGame);
+        totalPrice += games * boostPerGamePrice[desiredToKey];
+        console.log('totaslPrice3', totalPrice);
+
         break;
       }
 
@@ -166,11 +169,9 @@ const calculatePrice = (data) => {
   }
   if (lane && lane.primary !== '') {
     totalPrice *= 1.2;
-    console.log('total lane', totalPrice);
   }
   if (champions && champions.length > 0) {
     totalPrice *= 1.1;
-    console.log('total champ', totalPrice);
   }
   console.log('total', totalPrice);
 

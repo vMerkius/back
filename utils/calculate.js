@@ -119,6 +119,7 @@ const calculatePrice = (data) => {
         mmrsGame = mmrsFinal + 2;
         games = Math.ceil(rankDesired.lp / mmrsGame);
         totalPrice += games * boostPerGamePrice[currentToKey];
+        console.log('totaslPrice1', totalPrice);
         console.log('games', games);
         console.log('mmrsGame', mmrsGame);
         console.log('totalPrice', totalPrice);
@@ -134,6 +135,7 @@ const calculatePrice = (data) => {
       ) {
         for (let i = indexCurrent; i <= indexDesired; i++) {
           totalPrice += boostPrices[Object.keys(boostPrices)[i]];
+          console.log('totaslPrice2', totalPrice);
         }
       }
       break;

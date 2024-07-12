@@ -105,7 +105,10 @@ const calculatePrice = (data) => {
       console.log(' boostPerGamePrice.length - 1 ', last);
       console.log('rankDesired.lp', rankDesired.lp);
 
-      if (indexDesired === boostPerGamePrice.length - 1 && rankDesired.lp > 0) {
+      if (
+        indexDesired === Object.keys(boostPerGamePrice).length - 1 &&
+        rankDesired.lp > 0
+      ) {
         console.log('indexDesired', indexDesired);
         console.log(
           ' boostPerGamePrice.length - 1 ',

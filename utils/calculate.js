@@ -89,7 +89,6 @@ const calculatePrice = (data) => {
   } = data;
   let totalPrice = 0;
   let mmrsFinal;
-  let discountFinal;
   let mmrsGame;
   let games;
 
@@ -97,7 +96,6 @@ const calculatePrice = (data) => {
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
   const indexCurrent = Object.keys(boostPrices).indexOf(currentToKey);
   const indexDesired = Object.keys(boostPrices).indexOf(desiredToKey);
-  console.log('mmrs', mmrs);
 
   if (mmrs.length > 0) {
     mmrsFinal = parseInt(mmrs.slice(0, 2));
@@ -107,8 +105,6 @@ const calculatePrice = (data) => {
 
   switch (boostType) {
     case 'divisions':
-      let last = Object.keys(boostPerGamePrice).length - 1;
-
       if (
         indexDesired === Object.keys(boostPerGamePrice).length - 1 &&
         indexCurrent === Object.keys(boostPerGamePrice).length - 1 &&
@@ -117,10 +113,7 @@ const calculatePrice = (data) => {
         mmrsGame = mmrsFinal + 2;
         games = Math.ceil((rankDesired.lp - rankCurrent.lp) / mmrsGame);
         totalPrice += games * boostPerGamePrice[currentToKey];
-        console.log('totaslPrice1', totalPrice);
-        console.log('games', games);
-        console.log('mmrsGame', mmrsGame);
-        console.log('totalPrice', totalPrice);
+
         break;
       }
 
@@ -131,13 +124,11 @@ const calculatePrice = (data) => {
       ) {
         for (let i = indexCurrent; i <= indexDesired; i++) {
           totalPrice += boostPrices[Object.keys(boostPrices)[i]];
-          console.log('totaslPrice2', totalPrice);
         }
         if (rankDesired.rank === 'Master') {
           mmrsGame = mmrsFinal + 2;
           games = Math.ceil(rankDesired.lp / mmrsGame);
           totalPrice += games * boostPerGamePrice[desiredToKey];
-          console.log('totaslPrice3', totalPrice);
         }
       }
       break;
@@ -172,24 +163,23 @@ const calculatePrice = (data) => {
   if (champions && champions.length > 0) {
     totalPrice *= 1.1;
   }
-  console.log('total', totalPrice);
 
-  // switch (mmrsFinal) {
-  //   case 10:
-  //     totalPrice *= 1.3;
-  //     break;
-  //   case 15:
-  //     totalPrice *= 1.15;
-  //     break;
-  //   case 20:
-  //     totalPrice *= 1.1;
-  //     break;
-  //   case 25:
-  //     totalPrice *= 0.9;
-  //     break;
-  //   default:
-  //     totalPrice *= 0.8;
-  // }
+  switch (mmrsFinal) {
+    case 10:
+      totalPrice *= 1.3;
+      break;
+    case 15:
+      totalPrice *= 1.15;
+      break;
+    case 20:
+      totalPrice *= 1.1;
+      break;
+    case 25:
+      totalPrice *= 0.9;
+      break;
+    default:
+      totalPrice *= 0.8;
+  }
 
   if (discount) {
     if (discountCode.includes(discount)) {
@@ -199,6 +189,7 @@ const calculatePrice = (data) => {
   const price = 0.8 * totalPrice;
 
   return {
+    time: '9-17days',
     price: price.toFixed(2),
     totalPrice: totalPrice.toFixed(2),
     discountFinal: (totalPrice - price).toFixed(2),

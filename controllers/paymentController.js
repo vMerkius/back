@@ -37,7 +37,9 @@ exports.createCheckoutSession = async (req, res, next) => {
   let price, totalPrice, discountFinal;
 
   if (req.body.boostType) {
-    ({ price, totalPrice, discountFinal } = await calculatePrice(req.body));
+    ({ price, totalPrice, discountFinal, time } = await calculatePrice(
+      req.body
+    ));
   } else if (req.body.hours) {
     ({ price, totalPrice, discountFinal } = await calculateCoachPrice(
       req.body

@@ -8,9 +8,7 @@ const calculateTftPrice = require('../utils/calculateTft');
 
 exports.price = async (req, res, next) => {
   try {
-    let time = '9-17days';
-
-    const { price, totalPrice, discountFinal } = calculatePrice(req.body);
+    const { price, totalPrice, discountFinal, time } = calculatePrice(req.body);
 
     res.status(200).json({
       status: 200,

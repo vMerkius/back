@@ -100,6 +100,13 @@ const calculatePrice = (data) => {
 
   switch (boostType) {
     case 'divisions':
+      console.log('indexDesired', indexDesired);
+      console.log(
+        ' boostPerGamePrice.length - 1 ',
+        boostPerGamePrice.length - 1
+      );
+      console.log('rankDesired.lp', rankDesired.lp);
+
       if (indexDesired === boostPerGamePrice.length - 1 && rankDesired.lp > 0) {
         console.log('indexDesired', indexDesired);
         console.log(

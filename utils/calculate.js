@@ -164,11 +164,11 @@ const calculatePrice = (data) => {
   if (priority) {
     totalPrice *= 1.2;
   }
-  if (lane) {
+  if (lane && lane.primary !== '') {
     totalPrice *= 1.2;
     console.log('total lane', totalPrice);
   }
-  if (champions) {
+  if (champions && champions.length > 0) {
     totalPrice *= 1.1;
     console.log('total champ', totalPrice);
   }

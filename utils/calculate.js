@@ -124,7 +124,7 @@ const calculatePrice = (data) => {
         console.log('mmrsGame', mmrsGame);
         console.log('totalPrice', totalPrice);
       }
-      if (rankCurrent.rank === 'Master I' && rankDesired.rank === 'Master I') {
+      if (rankCurrent.rank === 'Master' && rankDesired.rank === 'Master') {
         break;
       }
 

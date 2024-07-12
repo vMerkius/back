@@ -175,22 +175,22 @@ const calculatePrice = (data) => {
   }
   console.log('total', totalPrice);
 
-  switch (mmrsFinal) {
-    case 10:
-      totalPrice *= 1.3;
-      break;
-    case 15:
-      totalPrice *= 1.15;
-      break;
-    case 20:
-      totalPrice *= 1.1;
-      break;
-    case 25:
-      totalPrice *= 0.9;
-      break;
-    default:
-      totalPrice *= 0.8;
-  }
+  // switch (mmrsFinal) {
+  //   case 10:
+  //     totalPrice *= 1.3;
+  //     break;
+  //   case 15:
+  //     totalPrice *= 1.15;
+  //     break;
+  //   case 20:
+  //     totalPrice *= 1.1;
+  //     break;
+  //   case 25:
+  //     totalPrice *= 0.9;
+  //     break;
+  //   default:
+  //     totalPrice *= 0.8;
+  // }
 
   if (discount) {
     if (discountCode.includes(discount)) {

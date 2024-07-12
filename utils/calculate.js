@@ -27,7 +27,7 @@ const boostPrices = {
   'Diamond III': 43.29,
   'Diamond II': 56.49,
   'Diamond I': 77.99,
-  Master: 93.49,
+  'Master I': 93.49,
 };
 const boostPerGamePrice = {
   'Iron IV': 0,
@@ -58,7 +58,7 @@ const boostPerGamePrice = {
   'Diamond III': 43.29,
   'Diamond II': 56.49,
   'Diamond I': 77.99,
-  Master: 93.49,
+  'Master I': 10,
 };
 const discountCode = [
   'DISCOUNT10',
@@ -90,6 +90,8 @@ const calculatePrice = (data) => {
   let totalPrice = 0;
   let mmrsFinal;
   let discountFinal;
+  let mmrsGame;
+  let games;
 
   const currentToKey = rankCurrent.rank + ' ' + rankCurrent.division;
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
@@ -98,6 +100,20 @@ const calculatePrice = (data) => {
 
   switch (boostType) {
     case 'divisions':
+      if (indexDesired === boostPerGamePrice.length - 1 && rankDesired.lp > 0) {
+        console.log('indexDesired', indexDesired);
+        console.log(
+          ' boostPerGamePrice.length - 1 ',
+          boostPerGamePrice.length - 1
+        );
+        mmrsGame = parseInt(mmrs.slice(0, 2)) + 2;
+        games = Math.ceil(rankDesired.lp / mmrsGame);
+        totalPrice += games * boostPerGamePrice[currentToKey];
+        console.log('games', games);
+        console.log('mmrsGame', mmrsGame);
+        console.log('totalPrice', totalPrice);
+      }
+
       if (
         indexCurrent >= 0 &&
         indexDesired >= 0 &&

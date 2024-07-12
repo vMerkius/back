@@ -170,6 +170,7 @@ const calculatePrice = (data) => {
   if (champions) {
     totalPrice *= 1.1;
   }
+  console.log('total', totalPrice);
 
   switch (mmrsFinal) {
     case 10:

@@ -97,9 +97,12 @@ const calculatePrice = (data) => {
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
   const indexCurrent = Object.keys(boostPrices).indexOf(currentToKey);
   const indexDesired = Object.keys(boostPrices).indexOf(desiredToKey);
+  console.log('mmrs', mmrs);
 
   if (mmrs.length > 0) {
     mmrsFinal = parseInt(mmrs.slice(0, 2));
+  } else {
+    mmrsFinal = 17;
   }
 
   switch (boostType) {
@@ -119,6 +122,9 @@ const calculatePrice = (data) => {
         console.log('games', games);
         console.log('mmrsGame', mmrsGame);
         console.log('totalPrice', totalPrice);
+      }
+      if (rankCurrent.rank === 'Master I' && rankDesired.rank === 'Master I') {
+        break;
       }
 
       if (

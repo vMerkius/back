@@ -121,13 +121,6 @@ const calculatePrice = (data) => {
         console.log('games', games);
         console.log('mmrsGame', mmrsGame);
         console.log('totalPrice', totalPrice);
-      }
-      if (rankCurrent.rank === 'Master' && rankDesired.rank === 'Master') {
-        mmrsGame = mmrsFinal + 2;
-        games = Math.ceil((rankDesired.lp - rankCurrent.lp) / mmrsGame);
-        totalPrice += games * boostPerGamePrice[desiredToKey];
-        console.log('totaslPrice3', totalPrice);
-
         break;
       }
 
@@ -139,6 +132,12 @@ const calculatePrice = (data) => {
         for (let i = indexCurrent; i <= indexDesired; i++) {
           totalPrice += boostPrices[Object.keys(boostPrices)[i]];
           console.log('totaslPrice2', totalPrice);
+        }
+        if (rankDesired.rank === 'Master') {
+          mmrsGame = mmrsFinal + 2;
+          games = Math.ceil(rankDesired.lp / mmrsGame);
+          totalPrice += games * boostPerGamePrice[desiredToKey];
+          console.log('totaslPrice3', totalPrice);
         }
       }
       break;

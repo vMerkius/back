@@ -98,6 +98,10 @@ const calculatePrice = (data) => {
   const indexCurrent = Object.keys(boostPrices).indexOf(currentToKey);
   const indexDesired = Object.keys(boostPrices).indexOf(desiredToKey);
 
+  if (mmrs.length > 0) {
+    mmrsFinal = parseInt(mmrs.slice(0, 2));
+  }
+
   switch (boostType) {
     case 'divisions':
       console.log('indexDesired', indexDesired);
@@ -109,12 +113,7 @@ const calculatePrice = (data) => {
         indexDesired === Object.keys(boostPerGamePrice).length - 1 &&
         rankDesired.lp > 0
       ) {
-        console.log('indexDesired', indexDesired);
-        console.log(
-          ' boostPerGamePrice.length - 1 ',
-          boostPerGamePrice.length - 1
-        );
-        mmrsGame = parseInt(mmrs.slice(0, 2)) + 2;
+        mmrsGame = mmrsFinal + 2;
         games = Math.ceil(rankDesired.lp / mmrsGame);
         totalPrice += games * boostPerGamePrice[currentToKey];
         console.log('games', games);
@@ -163,9 +162,7 @@ const calculatePrice = (data) => {
   if (champions) {
     totalPrice *= 1.1;
   }
-  if (mmrs.length > 0) {
-    mmrsFinal = parseInt(mmrs.slice(0, 2));
-  }
+
   switch (mmrsFinal) {
     case 10:
       totalPrice *= 1.3;

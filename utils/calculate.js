@@ -67,6 +67,37 @@ const discountCode = [
   'DISCOUNT40',
   'DISCOUNT50',
 ];
+const estimatedTimesForRankDifferences = [
+  '0-1 days',
+  '1-2 days',
+  '1-2 days',
+  '1-2 days',
+  '2-3 days',
+  '3-5 days',
+  '3-5 days',
+  '4-6 days',
+  '5-8 days',
+  '5-8 days',
+  '6-9 days',
+  '7-11 days',
+  '7-11 days',
+  '8-12 days',
+  '8-12 days',
+  '9-14 days',
+  '10-15 days',
+  '10-15 days',
+  '11-17 days',
+  '12-18 days',
+  '12-18 days',
+  '14-21 days',
+  '16-24 days',
+  '17-26 days',
+  '19-29 days',
+  '21-32 days',
+  '22-33 days',
+  '24-36 days',
+  '29-44 days',
+];
 
 const calculatePrice = (data) => {
   const {
@@ -96,6 +127,8 @@ const calculatePrice = (data) => {
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
   const indexCurrent = Object.keys(boostPrices).indexOf(currentToKey);
   const indexDesired = Object.keys(boostPrices).indexOf(desiredToKey);
+  let estimatedTime =
+    estimatedTimesForRankDifferences[indexDesired - indexCurrent];
 
   if (mmrs.length > 0) {
     mmrsFinal = parseInt(mmrs.slice(0, 2));
@@ -113,6 +146,16 @@ const calculatePrice = (data) => {
         mmrsGame = mmrsFinal + 2;
         games = Math.ceil((rankDesired.lp - rankCurrent.lp) / mmrsGame);
         totalPrice += games * boostPerGamePrice[currentToKey];
+        if (games > 15) {
+          estimatedTime =
+            estimatedTimesForRankDifferences[indexDesired - indexCurrent + 6];
+        } else if (games > 10) {
+          estimatedTime =
+            estimatedTimesForRankDifferences[indexDesired - indexCurrent + 4];
+        } else if (games > 6) {
+          estimatedTime =
+            estimatedTimesForRankDifferences[indexDesired - indexCurrent + 2];
+        }
 
         break;
       }
@@ -156,7 +199,15 @@ const calculatePrice = (data) => {
   }
   if (priority) {
     totalPrice *= 1.2;
+    if (indexDesired - indexCurrent >= 3) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 3];
+    } else if (indexDesired - indexCurrent >= 1) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 1];
+    }
   }
+
   if (lane && lane.primary !== '') {
     totalPrice *= 1.2;
   }
@@ -189,7 +240,7 @@ const calculatePrice = (data) => {
   const price = 0.8 * totalPrice;
 
   return {
-    time: '9-17days',
+    time: estimatedTime,
     price: price.toFixed(2),
     totalPrice: totalPrice.toFixed(2),
     discountFinal: (totalPrice - price).toFixed(2),

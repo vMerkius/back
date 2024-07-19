@@ -1,4 +1,4 @@
-import discountCode from './discount.js';
+const discountCode = require('./discount.js');
 const boostPrices = {
   'Iron IV': 0,
   'Iron III': 3.99,

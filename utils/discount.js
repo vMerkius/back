@@ -13,11 +13,6 @@ const discountCode = [
     code: 'DISCOUNT30',
     discount: 30,
   },
-
-  {
-    code: 'DISCOUNT40',
-    discount: 40,
-  },
 ];
 
 module.exports = discountCode;

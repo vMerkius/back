@@ -1,3 +1,4 @@
+import discountCode from './discount.js';
 const boostPrices = {
   'Iron IV': 0,
   'Iron III': 3.99,
@@ -60,13 +61,7 @@ const boostPerGamePrice = {
   'Diamond I': 77.99,
   'Master I': 10,
 };
-const discountCode = [
-  'DISCOUNT10',
-  'DISCOUNT20',
-  'DISCOUNT30',
-  'DISCOUNT40',
-  'DISCOUNT50',
-];
+
 const estimatedTimesForRankDifferences = [
   '0-1 days',
   '1-2 days',
@@ -200,8 +195,12 @@ const calculateTftPrice = (data) => {
   // }
 
   if (discount) {
-    if (discountCode.includes(discount)) {
-      totalPrice *= 0.9;
+    const discountCodeFound = discountCode.find(
+      (el) => el.code === discount.toUpperCase()
+    );
+    if (discountCodeFound) {
+      discountFinal = totalPrice * (discountCodeFound.discount / 100);
+      totalPrice -= discountFinal;
     }
   }
   const price = totalPrice;

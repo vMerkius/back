@@ -7,7 +7,7 @@ const sendEmail = async (options) => {
   });
 
   const sentFrom = new mailer.Sender(
-    'boosters.den@trial-yzkq340o8v34d796.mlsender.net',
+    'boostersden@boosters-den.com',
     'Boosters Den'
   );
 

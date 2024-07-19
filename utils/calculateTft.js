@@ -27,7 +27,7 @@ const boostPrices = {
   'Diamond III': 43.29,
   'Diamond II': 56.49,
   'Diamond I': 77.99,
-  Master: 93.49,
+  'Master I': 93.49,
 };
 const boostPerGamePrice = {
   'Iron IV': 0,
@@ -58,7 +58,7 @@ const boostPerGamePrice = {
   'Diamond III': 43.29,
   'Diamond II': 56.49,
   'Diamond I': 77.99,
-  Master: 93.49,
+  'Master I': 10,
 };
 const discountCode = [
   'DISCOUNT10',
@@ -66,6 +66,37 @@ const discountCode = [
   'DISCOUNT30',
   'DISCOUNT40',
   'DISCOUNT50',
+];
+const estimatedTimesForRankDifferences = [
+  '0-1 days',
+  '1-2 days',
+  '1-2 days',
+  '1-2 days',
+  '2-3 days',
+  '3-5 days',
+  '3-5 days',
+  '4-6 days',
+  '5-8 days',
+  '5-8 days',
+  '6-9 days',
+  '7-11 days',
+  '7-11 days',
+  '8-12 days',
+  '8-12 days',
+  '9-14 days',
+  '10-15 days',
+  '10-15 days',
+  '11-17 days',
+  '12-18 days',
+  '12-18 days',
+  '14-21 days',
+  '16-24 days',
+  '17-26 days',
+  '19-29 days',
+  '21-32 days',
+  '22-33 days',
+  '24-36 days',
+  '29-44 days',
 ];
 
 const calculateTftPrice = (data) => {
@@ -82,16 +113,54 @@ const calculateTftPrice = (data) => {
   let totalPrice = 0;
   let mmrsFinal;
   let discountFinal;
+  let mmrsGame;
+  let games;
 
   const currentToKey = rankCurrent.rank + ' ' + rankCurrent.division;
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
   const indexCurrent = Object.keys(boostPrices).indexOf(currentToKey);
   const indexDesired = Object.keys(boostPrices).indexOf(desiredToKey);
+  let estimatedTime =
+    estimatedTimesForRankDifferences[indexDesired - indexCurrent];
 
-  if (indexCurrent >= 0 && indexDesired >= 0 && indexCurrent <= indexDesired)
+  if (mmrs.length > 0) {
+    mmrsFinal = parseInt(mmrs.slice(0, 2));
+  } else {
+    mmrsFinal = 17;
+  }
+
+  if (
+    indexDesired === Object.keys(boostPerGamePrice).length - 1 &&
+    indexCurrent === Object.keys(boostPerGamePrice).length - 1 &&
+    rankDesired.lp > 0
+  ) {
+    mmrsGame = mmrsFinal + 2;
+    games = Math.ceil((rankDesired.lp - rankCurrent.lp) / mmrsGame);
+    totalPrice += games * boostPerGamePrice[currentToKey];
+    if (games > 15) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent + 6];
+    } else if (games > 10) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent + 4];
+    } else if (games > 6) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent + 2];
+    }
+  } else if (
+    indexCurrent >= 0 &&
+    indexDesired >= 0 &&
+    indexCurrent <= indexDesired
+  ) {
     for (let i = indexCurrent; i <= indexDesired; i++) {
       totalPrice += boostPrices[Object.keys(boostPrices)[i]];
     }
+    if (rankDesired.rank === 'Master') {
+      mmrsGame = mmrsFinal + 2;
+      games = Math.ceil(rankDesired.lp / mmrsGame);
+      totalPrice += games * boostPerGamePrice[desiredToKey];
+    }
+  }
 
   if (additionalWin) {
     totalPrice += 10;
@@ -104,11 +173,15 @@ const calculateTftPrice = (data) => {
   }
   if (priority) {
     totalPrice *= 1.2;
+    if (indexDesired - indexCurrent >= 3) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 3];
+    } else if (indexDesired - indexCurrent >= 1) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 1];
+    }
   }
 
-  if (mmrs.length > 0) {
-    mmrsFinal = parseInt(mmrs.slice(0, 2));
-  }
   switch (mmrsFinal) {
     case 10:
       totalPrice *= 1.3;
@@ -134,6 +207,7 @@ const calculateTftPrice = (data) => {
   const price = 0.8 * totalPrice;
 
   return {
+    time: estimatedTime,
     price: price.toFixed(2),
     totalPrice: totalPrice.toFixed(2),
     discountFinal: (totalPrice - price).toFixed(2),

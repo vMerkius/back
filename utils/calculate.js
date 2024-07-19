@@ -62,13 +62,7 @@ const boostPerGamePrice = {
   'Diamond I': 77.99,
   'Master I': 10,
 };
-const discountCode = [
-  'DISCOUNT10',
-  'DISCOUNT20',
-  'DISCOUNT30',
-  'DISCOUNT40',
-  'DISCOUNT50',
-];
+
 const estimatedTimesForRankDifferences = [
   '0-1 days',
   '1-2 days',

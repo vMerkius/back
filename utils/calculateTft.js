@@ -147,7 +147,7 @@ const calculateTftPrice = (data) => {
     indexDesired >= 0 &&
     indexCurrent <= indexDesired
   ) {
-    for (let i = indexCurrent; i <= indexDesired; i++) {
+    for (let i = indexCurrent + 1; i <= indexDesired; i++) {
       totalPrice += boostPrices[Object.keys(boostPrices)[i]];
     }
     if (rankDesired.rank === 'Master') {

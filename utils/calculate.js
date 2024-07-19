@@ -1,3 +1,5 @@
+const discountCode = require('./discount.js');
+
 const boostPrices = {
   'Iron IV': 0,
   'Iron III': 3.99,
@@ -165,7 +167,7 @@ const calculatePrice = (data) => {
         indexDesired >= 0 &&
         indexCurrent <= indexDesired
       ) {
-        for (let i = indexCurrent; i <= indexDesired; i++) {
+        for (let i = indexCurrent + 1; i <= indexDesired; i++) {
           totalPrice += boostPrices[Object.keys(boostPrices)[i]];
         }
         if (rankDesired.rank === 'Master') {
@@ -233,11 +235,16 @@ const calculatePrice = (data) => {
   }
 
   if (discount) {
-    if (discountCode.includes(discount)) {
-      totalPrice *= 0.9;
+    const discountCodeFound = discountCode.find(
+      (el) => el.code === discount.toUpperCase()
+    );
+    if (discountCodeFound) {
+      discountFinal = totalPrice * (discountCodeFound.discount / 100);
+      totalPrice -= discountFinal;
     }
   }
-  const price = 0.8 * totalPrice;
+  const price = totalPrice;
+  totalPrice = totalPrice * 1.2;
 
   return {
     time: estimatedTime,

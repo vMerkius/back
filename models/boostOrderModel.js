@@ -41,6 +41,7 @@ const boostOrderSchema = new mongoose.Schema({
   mmrs: { type: String },
   netWins: { type: Number },
   placements: { type: Number },
+  discord: { type: String },
   discount: { type: String },
   price: { type: Number, required: [true, 'Please provide a price'] },
   discountFinal: { type: Number },

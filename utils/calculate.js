@@ -118,6 +118,10 @@ const calculatePrice = (data) => {
   let mmrsFinal;
   let mmrsGame;
   let games;
+  let lpsCurrent;
+  let lpsDesired;
+  let gamesCurrent;
+  let gamesDesired;
 
   const currentToKey = rankCurrent.rank + ' ' + rankCurrent.division;
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
@@ -128,6 +132,7 @@ const calculatePrice = (data) => {
 
   if (mmrs.length > 0) {
     mmrsFinal = parseInt(mmrs.slice(0, 2));
+    mmrsGame = mmrsFinal + 2;
   } else {
     mmrsFinal = 17;
   }
@@ -154,6 +159,25 @@ const calculatePrice = (data) => {
         }
 
         break;
+      }
+      if (
+        indexCurrent !== Object.values(boostPerGamePrice).length - 1 &&
+        rankCurrent.lp.slice(0, 1) !== '0'
+      ) {
+        lpsCurrent = parseInt(rankCurrent.lp.slice(0, 2));
+        gamesCurrent = Math.ceil(lpsCurrent / mmrsGame);
+        console.log(lpsCurrent, gamesCurrent);
+        totalPrice -= gamesCurrent * boostPerGamePrice[currentToKey] * 0.6;
+        console.log(totalPrice);
+      }
+      if (
+        indexDesired !== Object.values(boostPerGamePrice).length - 1 &&
+        rankDesired.lp.slice(0, 1) !== '0'
+      ) {
+        lpsDesired = parseInt(rankDesired.lp.slice(0, 2));
+        gamesDesired = Math.ceil(lpsDesired / mmrsGame);
+        totalPrice += gamesDesired * boostPerGamePrice[desiredToKey];
+        console.log(lpsDesired, gamesDesired, totalPrice);
       }
 
       if (

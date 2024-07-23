@@ -5,6 +5,7 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
+const { link } = require('fs');
 const SERVER_URL = process.env.SERVER_URL;
 const BASE_URL = process.env.BASE_URL;
 
@@ -50,19 +51,16 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: password,
   });
   const verificationToken = signToken(newUser._id);
-  console.log('Verification token:', verificationToken);
 
   try {
-    console.log('Sending email');
     const url = `${SERVER_URL}/api/v1/users/verify/${verificationToken}`;
 
     await sendEmail({
       email: email,
       fullName: name,
+      link: url,
       subject: 'Verify Your Account',
-      message: `Please click on the link below to verify your account: ${url}`,
     });
-    console.log('Email sent');
 
     res.status(200).json({
       status: 'success',

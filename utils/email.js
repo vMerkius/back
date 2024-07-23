@@ -50,6 +50,12 @@ const sendEmailTemplate = async (options) => {
     }
   ];
 
+  console.log("Inside sendEmailTemplate")
+  console.log("Email", options.email);
+  console.log("FullName", options.fullName);
+  console.log("Link", options.link);
+  console.log("Subject", options.subject);
+
 const emailParams = new EmailParams()
     .setFrom(sentFrom)
     .setRecipients(recipients)
@@ -58,9 +64,9 @@ const emailParams = new EmailParams()
     .setPersonalization(personalization);
 
     try {
-      await mailerSend.email.send(emailParams);
+      await mailerSend.send(emailParams);
     } catch (err) {
-      
+
     }
 };
 

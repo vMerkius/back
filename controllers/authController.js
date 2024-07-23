@@ -56,6 +56,10 @@ exports.signup = catchAsync(async (req, res, next) => {
   try {
     const url = `${SERVER_URL}/api/v1/users/verify/${verificationToken}`;
 
+    console.log('Verification URL:', url);
+    console.log('Email:', email);
+    console.log('Name:', name);
+    console.log('Link:', link);
     await sendEmailTemplate({
       email: email,
       fullName: name,

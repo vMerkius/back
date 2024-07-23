@@ -29,38 +29,38 @@ const boostPrices = {
   'Diamond III': 43.29,
   'Diamond II': 56.49,
   'Diamond I': 77.99,
-  'Master I': 93.49,
+  'Master I': 110.99,
 };
 const boostPerGamePrice = {
-  'Iron IV': 0,
-  'Iron III': 3.99,
-  'Iron II': 3.99,
-  'Iron I': 3.99,
-  'Bronze IV': 4.39,
-  'Bronze III': 4.99,
-  'Bronze II': 4.99,
-  'Bronze I': 4.99,
-  'Silver IV': 5.99,
-  'Silver III': 6.29,
-  'Silver II': 6.69,
-  'Silver I': 6.99,
-  'Gold IV': 9.69,
-  'Gold III': 10.49,
-  'Gold II': 11.29,
-  'Gold I': 13.49,
-  'Platinum IV': 14.49,
-  'Platinum III': 15.49,
-  'Platinum II': 17.79,
-  'Platinum I': 19.99,
-  'Emerald IV': 25.49,
-  'Emerald III': 26.79,
-  'Emerald II': 28.29,
-  'Emerald I': 30.99,
-  'Diamond IV': 32.29,
-  'Diamond III': 43.29,
-  'Diamond II': 56.49,
-  'Diamond I': 77.99,
-  'Master I': 10,
+  'Iron IV': 1,
+  'Iron III': 1,
+  'Iron II': 1,
+  'Iron I': 1,
+  'Bronze IV': 1.5,
+  'Bronze III': 1.5,
+  'Bronze II': 1.5,
+  'Bronze I': 1.5,
+  'Silver IV': 2,
+  'Silver III': 2.5,
+  'Silver II': 2.5,
+  'Silver I': 3,
+  'Gold IV': 3.5,
+  'Gold III': 3.5,
+  'Gold II': 4,
+  'Gold I': 4,
+  'Platinum IV': 5,
+  'Platinum III': 5,
+  'Platinum II': 5.5,
+  'Platinum I': 6,
+  'Emerald IV': 7,
+  'Emerald III': 7.5,
+  'Emerald II': 8,
+  'Emerald I': 9,
+  'Diamond IV': 12,
+  'Diamond III': 14,
+  'Diamond II': 18,
+  'Diamond I': 22,
+  'Master I': 29,
 };
 
 const estimatedTimesForRankDifferences = [
@@ -118,6 +118,8 @@ const calculatePrice = (data) => {
   let mmrsFinal;
   let mmrsGame;
   let games;
+  let lpsCurrent;
+  let lpsDesired;
 
   const currentToKey = rankCurrent.rank + ' ' + rankCurrent.division;
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
@@ -128,6 +130,7 @@ const calculatePrice = (data) => {
 
   if (mmrs.length > 0) {
     mmrsFinal = parseInt(mmrs.slice(0, 2));
+    mmrsGame = mmrsFinal + 2;
   } else {
     mmrsFinal = 17;
   }
@@ -154,6 +157,20 @@ const calculatePrice = (data) => {
         }
 
         break;
+      }
+      if (
+        indexCurrent !== Object.values(boostPerGamePrice).length - 1 &&
+        rankCurrent.lp.slice(0, 1) !== '0'
+      ) {
+        lpsCurrent = parseInt(rankCurrent.lp.slice(0, 2));
+        totalPrice -= (boostPrices[currentToKey] * lpsCurrent) / 100;
+      }
+      if (
+        indexDesired !== Object.values(boostPerGamePrice).length - 1 &&
+        rankDesired.lp.slice(0, 1) !== '0'
+      ) {
+        lpsDesired = parseInt(rankDesired.lp.slice(0, 2)) + 10;
+        totalPrice += (boostPrices[desiredToKey] * lpsDesired) / 100;
       }
 
       if (
@@ -182,19 +199,19 @@ const calculatePrice = (data) => {
   }
 
   if (!solo) {
-    totalPrice *= 1.2;
+    totalPrice *= 0.5;
   }
   if (additionalWin) {
-    totalPrice += 10;
+    totalPrice += 7;
   }
   if (streamed) {
-    totalPrice *= 1.1;
+    totalPrice *= 1.2;
   }
   if (chat) {
     totalPrice *= 1.1;
   }
   if (priority) {
-    totalPrice *= 1.2;
+    totalPrice *= 1.25;
     if (indexDesired - indexCurrent >= 3) {
       estimatedTime =
         estimatedTimesForRankDifferences[indexDesired - indexCurrent - 3];
@@ -205,7 +222,7 @@ const calculatePrice = (data) => {
   }
 
   if (lane && lane.primary !== '') {
-    totalPrice *= 1.2;
+    totalPrice *= 1.1;
   }
   if (champions && champions.length > 0) {
     totalPrice *= 1.1;
@@ -213,19 +230,22 @@ const calculatePrice = (data) => {
 
   switch (mmrsFinal) {
     case 10:
-      totalPrice *= 1.3;
+      totalPrice *= 1.6;
       break;
     case 15:
-      totalPrice *= 1.15;
+      totalPrice *= 1.4;
       break;
     case 20:
-      totalPrice *= 1.1;
+      totalPrice *= 1;
       break;
     case 25:
-      totalPrice *= 0.9;
+      totalPrice *= 0.8;
+      break;
+    case 30:
+      totalPrice *= 0.65;
       break;
     default:
-      totalPrice *= 0.8;
+      totalPrice *= 1.2;
   }
 
   if (discount) {

@@ -26,6 +26,7 @@ const tftOrderSchema = new mongoose.Schema({
   additionalWin: { type: Boolean },
   mmrs: { type: String },
   discount: { type: String },
+  discord: { type: String },
   price: { type: Number, required: [true, 'Please provide a price'] },
   discountFinal: { type: Number },
   totalPrice: { type: Number },

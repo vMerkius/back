@@ -66,7 +66,7 @@ const emailParams = new EmailParams()
     try {
       await mailerSend.send(emailParams);
     } catch (err) {
-
+      console.log("Error sending email template", err);
     }
 };
 

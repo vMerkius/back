@@ -51,7 +51,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: email,
     password: password,
   });
+  console.log('PreToken');
   const verificationToken = signToken(newUser._id);
+  console.log('verificationToken', verificationToken);
 
   try {
     const url = `${SERVER_URL}/api/v1/users/verify/${verificationToken}`;

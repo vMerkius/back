@@ -6,6 +6,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
 const { link } = require('fs');
+const sendEmailTemplate = require('./../utils/email');
 const SERVER_URL = process.env.SERVER_URL;
 const BASE_URL = process.env.BASE_URL;
 
@@ -55,7 +56,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   try {
     const url = `${SERVER_URL}/api/v1/users/verify/${verificationToken}`;
 
-    await sendEmail({
+    await sendEmailTemplate({
       email: email,
       fullName: name,
       link: url,

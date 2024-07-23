@@ -64,7 +64,7 @@ const emailParams = new EmailParams()
     .setPersonalization(personalization);
 
     try {
-      await mailerSend.send(emailParams);
+      await mailerSend.email.send(emailParams);
     } catch (err) {
       console.log("Error sending email template", err);
     }

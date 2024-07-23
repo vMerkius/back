@@ -42,7 +42,7 @@ const sendEmailTemplate = async (options) => {
 
   const personalization = [
     {
-      email: "recipient@email.com",
+      email: options.email,
       data: {
         link: options.link,
         name: options.fullName

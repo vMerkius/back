@@ -165,19 +165,14 @@ const calculatePrice = (data) => {
         rankCurrent.lp.slice(0, 1) !== '0'
       ) {
         lpsCurrent = parseInt(rankCurrent.lp.slice(0, 2));
-        gamesCurrent = Math.ceil(lpsCurrent / mmrsGame);
-        console.log(lpsCurrent, gamesCurrent);
-        totalPrice -= gamesCurrent * boostPerGamePrice[currentToKey] * 0.6;
-        console.log(totalPrice);
+        totalPrice -= (boostPrices[currentToKey] * lpsCurrent) / 100;
       }
       if (
         indexDesired !== Object.values(boostPerGamePrice).length - 1 &&
         rankDesired.lp.slice(0, 1) !== '0'
       ) {
         lpsDesired = parseInt(rankDesired.lp.slice(0, 2)) + 10;
-        gamesDesired = Math.ceil(lpsDesired / mmrsGame);
-        totalPrice += gamesDesired * boostPerGamePrice[desiredToKey];
-        console.log(lpsDesired, gamesDesired, totalPrice);
+        totalPrice += (boostPrices[desiredToKey] * lpsDesired) / 100;
       }
 
       if (

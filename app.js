@@ -64,11 +64,11 @@ app.use(
   express.static(path.join(__dirname, 'uploads'))
 );
 
-app.use((req, res, next) => {
-  console.log('Origin:', req.headers.origin);
-  console.log('Referer:', req.headers.referer);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log('Origin:', req.headers.origin);
+//   console.log('Referer:', req.headers.referer);
+//   next();
+// });
 app.use((req, res, next) => {
   res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
   res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');

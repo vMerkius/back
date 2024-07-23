@@ -120,8 +120,6 @@ const calculatePrice = (data) => {
   let games;
   let lpsCurrent;
   let lpsDesired;
-  let gamesCurrent;
-  let gamesDesired;
 
   const currentToKey = rankCurrent.rank + ' ' + rankCurrent.division;
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;

@@ -110,6 +110,8 @@ const calculateTftPrice = (data) => {
   let discountFinal;
   let mmrsGame;
   let games;
+  let lpsCurrent;
+  let lpsDesired;
 
   const currentToKey = rankCurrent.rank + ' ' + rankCurrent.division;
   const desiredToKey = rankDesired.rank + ' ' + rankDesired.division;
@@ -155,6 +157,20 @@ const calculateTftPrice = (data) => {
       games = Math.ceil(rankDesired.lp / mmrsGame);
       totalPrice += games * boostPerGamePrice[desiredToKey];
     }
+  }
+  if (
+    indexCurrent !== Object.values(boostPerGamePrice).length - 1 &&
+    rankCurrent.lp.slice(0, 1) !== '0'
+  ) {
+    lpsCurrent = parseInt(rankCurrent.lp.slice(0, 2));
+    totalPrice -= (boostPrices[currentToKey] * lpsCurrent) / 100;
+  }
+  if (
+    indexDesired !== Object.values(boostPerGamePrice).length - 1 &&
+    rankDesired.lp.slice(0, 1) !== '0'
+  ) {
+    lpsDesired = parseInt(rankDesired.lp.slice(0, 2)) + 10;
+    totalPrice += (boostPrices[desiredToKey] * lpsDesired) / 100;
   }
 
   if (additionalWin) {

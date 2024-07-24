@@ -58,13 +58,14 @@ const sendEmailTemplate = async (options) => {
 
   const emailParams = new mailer.EmailParams()
     .setFrom(sentFrom)
-    .setRecipients(recipients)
+    .setTo(recipients)
+    .setReplyTo(sentFrom)
     .setSubject(options.subject)
     .setTemplateId('jy7zpl90mqrl5vx6')
     .setPersonalization(personalization);
 
     try {
-      await mailerSend.send(emailParams);
+      await mailerSend.email.send(emailParams);
     } catch (err) {
       console.log("Error sending email template", err);
     }

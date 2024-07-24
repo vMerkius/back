@@ -24,7 +24,7 @@ const sendEmail = async (options) => {
   try {
     await mailerSend.email.send(emailParams);
   } catch (err) {
-
+    console.log("Error sending email", err);
   }
 };
 
@@ -56,7 +56,7 @@ const sendEmailTemplate = async (options) => {
   console.log("Link", options.link);
   console.log("Subject", options.subject);
 
-const emailParams = new EmailParams()
+  const emailParams = new mailer.EmailParams()
     .setFrom(sentFrom)
     .setRecipients(recipients)
     .setSubject(options.subject)
@@ -70,5 +70,7 @@ const emailParams = new EmailParams()
     }
 };
 
-module.exports = sendEmail;
-module.exports = sendEmailTemplate;
+module.exports = {
+  sendEmail,
+  sendEmailTemplate
+};

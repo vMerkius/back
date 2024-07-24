@@ -64,7 +64,7 @@ const sendEmailTemplate = async (options) => {
     .setPersonalization(personalization);
 
     try {
-      await mailerSend.email.send(emailParams);
+      await mailerSend.send(emailParams);
     } catch (err) {
       console.log("Error sending email template", err);
     }

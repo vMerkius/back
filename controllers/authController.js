@@ -75,7 +75,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     return next(
-      new AppError('There was an error sending email confirmation.'),
+      new AppError(err.message),
       500
     );
   }

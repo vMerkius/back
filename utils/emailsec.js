@@ -21,14 +21,14 @@ const sendAccountActivation = async (options) => {
     ];
     
     const emailParams = new EmailParams()
-        .setFrom("boosting.bden@gmail.com")
+        .setFrom("boostersden@boosters-den.com")
         .setFromName("Boosters Den")
         .setRecipients(recipients)
         .setSubject("Welcome to Boosters Den!")
         .setTemplateId('jy7zpl90mqrl5vx6')
         .setPersonalization(personalization);
     
-    mailersend.send(emailParams);
+    mailersend.email.send(emailParams);
 };
 
 module.exports = sendAccountActivation;

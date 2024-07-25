@@ -1,7 +1,7 @@
 const Recipient = require("mailersend").Recipient;
 const EmailParams = require("mailersend").EmailParams;
 const Sender = require("mailersend").Sender;
-const MailerSend = require("mailersend");
+const MailerSend = require("mailersend").MailerSend;
 const MAIL_API_KEY = process.env.MAIL_API_KEY;
 
 const sendAccountActivation = async (options) => {

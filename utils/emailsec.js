@@ -31,7 +31,7 @@ const sendAccountActivation = async (options) => {
         .setSubject("Welcome to Boosters Den!")
         .setTemplateId('jy7zpl90mqrl5vx6')
     
-    mailerSend.email.send(emailParams);
+    await mailerSend.email.send(emailParams);
 };
 
 module.exports = sendAccountActivation;

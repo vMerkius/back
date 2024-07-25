@@ -20,10 +20,15 @@ const sendAccountActivation = async (options) => {
       }
     ];
     
+    const setFrom = new mailer.Sender(
+        'boostersden@boosters-den.com',
+        'Boosters Den'
+      );
+      
     const emailParams = new EmailParams()
-        .setFrom("boostersden@boosters-den.com")
-        .setFromName("Boosters Den")
-        .setRecipients(recipients)
+        .setFrom(setFrom)
+        .setTo(recipients)
+        .setReplyTo(setFrom)
         .setSubject("Welcome to Boosters Den!")
         .setTemplateId('jy7zpl90mqrl5vx6')
         .setPersonalization(personalization);

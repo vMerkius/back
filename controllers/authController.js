@@ -5,6 +5,7 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
+const sendAccountActivation = require('./../utils/emailsec');
 const { link } = require('fs');
 const sendEmailTemplate = require('./../utils/email');
 const SERVER_URL = process.env.SERVER_URL;
@@ -61,11 +62,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     console.log('Verification URL:', url);
     console.log('Email:', email);
     console.log('Name:', name);
-    await sendEmailTemplate({
+    await sendAccountActivation({
       email: email,
-      fullName: name,
+      name: name,
       link: url,
-      subject: 'Verify Your Account',
     });
 
     res.status(200).json({

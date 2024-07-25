@@ -1,12 +1,15 @@
 const Recipient = require("mailersend").Recipient;
 const EmailParams = require("mailersend").EmailParams;
+const Sender = require("mailersend").Sender;
 const MailerSend = require("mailersend");
 const MAIL_API_KEY = process.env.MAIL_API_KEY;
 
 const sendAccountActivation = async (options) => {
-    const mailersend = new MailerSend({
+    const mailerSend = new MailerSend({
         apiKey: MAIL_API_KEY,
     });
+
+    const setFrom = new Sender('boostersden@boosters-den.com','Boosters Den');
     
     const recipients = [new Recipient(options.email, options.name)];
     
@@ -17,14 +20,9 @@ const sendAccountActivation = async (options) => {
           link: options.link,
           name: options.name
         },
-      }
+      } 
     ];
-    
-    const setFrom = new mailer.Sender(
-        'boostersden@boosters-den.com',
-        'Boosters Den'
-      );
-      
+          
     const emailParams = new EmailParams()
         .setFrom(setFrom)
         .setTo(recipients)
@@ -33,7 +31,7 @@ const sendAccountActivation = async (options) => {
         .setTemplateId('jy7zpl90mqrl5vx6')
         .setPersonalization(personalization);
     
-    mailersend.email.send(emailParams);
+    mailerSend.email.send(emailParams);
 };
 
 module.exports = sendAccountActivation;

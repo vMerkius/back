@@ -27,9 +27,9 @@ const sendAccountActivation = async (options) => {
         .setFrom(setFrom)
         .setTo(recipients)
         .setReplyTo(setFrom)
+        .setPersonalization(personalization)
         .setSubject("Welcome to Boosters Den!")
         .setTemplateId('jy7zpl90mqrl5vx6')
-        .setPersonalization(personalization);
     
     mailerSend.email.send(emailParams);
 };

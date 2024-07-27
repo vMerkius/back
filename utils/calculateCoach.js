@@ -16,7 +16,8 @@ const calculateCoachPrice = async (data) => {
     totalPrice *= 1.2;
   }
 
-  const price = 0.8 * totalPrice;
+  const price = totalPrice;
+  totalPrice = totalPrice * 1.4;
 
   return {
     price: price.toFixed(2),

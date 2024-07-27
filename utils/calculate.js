@@ -21,15 +21,15 @@ const boostPrices = {
   'Platinum III': 15.49,
   'Platinum II': 17.79,
   'Platinum I': 19.99,
-  'Emerald IV': 25.49,
-  'Emerald III': 26.79,
-  'Emerald II': 28.29,
-  'Emerald I': 30.99,
-  'Diamond IV': 32.29,
-  'Diamond III': 43.29,
-  'Diamond II': 56.49,
-  'Diamond I': 77.99,
-  'Master I': 110.99,
+  'Emerald IV': 24.49,
+  'Emerald III': 25.79,
+  'Emerald II': 26.29,
+  'Emerald I': 27.99,
+  'Diamond IV': 30.29,
+  'Diamond III': 42.29,
+  'Diamond II': 55.49,
+  'Diamond I': 74.99,
+  'Master I': 99.99,
 };
 const boostPerGamePrice = {
   'Iron IV': 1,
@@ -207,23 +207,27 @@ const calculatePrice = (data) => {
   if (streamed) {
     totalPrice *= 1.2;
   }
-  if (chat) {
-    totalPrice *= 1.1;
-  }
+
   if (priority) {
     totalPrice *= 1.25;
-    if (indexDesired - indexCurrent >= 3) {
-      estimatedTime =
-        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 3];
-    } else if (indexDesired - indexCurrent >= 1) {
-      estimatedTime =
-        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 1];
+    if (priority) {
+      totalPrice *= 1.25;
+      if (indexDesired - indexCurrent >= 4) {
+        estimatedTime =
+          estimatedTimesForRankDifferences[indexDesired - indexCurrent - 4];
+      } else if (indexDesired - indexCurrent >= 3) {
+        estimatedTime =
+          estimatedTimesForRankDifferences[indexDesired - indexCurrent - 3];
+      } else if (indexDesired - indexCurrent >= 2) {
+        estimatedTime =
+          estimatedTimesForRankDifferences[indexDesired - indexCurrent - 2];
+      } else if (indexDesired - indexCurrent >= 1) {
+        estimatedTime =
+          estimatedTimesForRankDifferences[indexDesired - indexCurrent - 1];
+      }
     }
   }
 
-  if (lane && lane.primary !== '') {
-    totalPrice *= 1.1;
-  }
   if (champions && champions.length > 0) {
     totalPrice *= 1.1;
   }
@@ -258,7 +262,7 @@ const calculatePrice = (data) => {
     }
   }
   const price = totalPrice;
-  totalPrice = totalPrice * 1.2;
+  totalPrice = totalPrice * 1.4;
 
   return {
     time: estimatedTime,

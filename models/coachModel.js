@@ -9,6 +9,10 @@ const coachSchema = new mongoose.Schema({
   rating: { type: Number, required: [true, 'Please provide a rating'] },
   language: [{ type: String, required: [true, 'Please provide a language'] }],
   recommended: { type: Boolean },
+  description: {
+    type: String,
+    required: [true, 'Please provide a description'],
+  },
   image: { type: String },
   price: { type: Number, required: [true, 'Please provide a price'] },
 });

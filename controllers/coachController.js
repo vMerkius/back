@@ -32,6 +32,7 @@ exports.createCoach = async (req, res) => {
       champions,
       rating,
       language,
+      description,
       recommended,
       price,
     } = req.body;
@@ -49,6 +50,7 @@ exports.createCoach = async (req, res) => {
       champions,
       rating,
       language,
+      description,
       recommended,
       image: imagePath,
       price,
@@ -106,7 +108,7 @@ exports.getCoachesPaging = async (req, res) => {
     if (name) filter.name = { $regex: name, $options: 'i' };
     if (game) filter.game = game;
     if (rank) filter.rank = rank;
-    if (lane) filter.lanes = { $elemMatch: { $regex: lane, $options: 'i' } }; // Use elemMatch for case-insensitive match in arrays
+    if (lane) filter.lanes = { $elemMatch: { $regex: lane, $options: 'i' } };
     if (champion)
       filter.champions = { $elemMatch: { $regex: champion, $options: 'i' } };
     if (language)

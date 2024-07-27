@@ -5,6 +5,7 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const sendEmail = require('./../utils/email');
+const { sendAccountActivation, sendForgotPassword } = require('./../utils/emailsec');
 const { link } = require('fs');
 const sendEmailTemplate = require('./../utils/email');
 const SERVER_URL = process.env.SERVER_URL;
@@ -61,11 +62,10 @@ exports.signup = catchAsync(async (req, res, next) => {
     console.log('Verification URL:', url);
     console.log('Email:', email);
     console.log('Name:', name);
-    await sendEmailTemplate({
+    await sendAccountActivation({
       email: email,
-      fullName: name,
+      name: name,
       link: url,
-      subject: 'Verify Your Account',
     });
 
     res.status(200).json({
@@ -75,7 +75,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
   } catch (err) {
     return next(
-      new AppError('There was an error sending email confirmation.'),
+      new AppError(err.message),
       500
     );
   }
@@ -189,13 +189,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   const resetURL = `${BASE_URL}/new-password/${resetToken}`;
 
-  const message = `Forgot your password? Set your new password here: ${resetURL}\nIf you didn't request password reset, please ignore this email!`;
-
   try {
-    await sendEmail({
+    await sendForgotPassword({
       email: user.email,
-      subject: 'Your password reset token (valid for 10 min)',
-      message,
+      name: user.name,
+      link: resetURL
     });
 
     res.status(200).json({

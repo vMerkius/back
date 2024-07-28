@@ -179,14 +179,18 @@ const calculateTftPrice = (data) => {
   if (streamed) {
     totalPrice *= 1.2;
   }
-  if (chat) {
-    totalPrice *= 1.1;
-  }
+
   if (priority) {
     totalPrice *= 1.25;
-    if (indexDesired - indexCurrent >= 3) {
+    if (indexDesired - indexCurrent >= 4) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 4];
+    } else if (indexDesired - indexCurrent >= 3) {
       estimatedTime =
         estimatedTimesForRankDifferences[indexDesired - indexCurrent - 3];
+    } else if (indexDesired - indexCurrent >= 2) {
+      estimatedTime =
+        estimatedTimesForRankDifferences[indexDesired - indexCurrent - 2];
     } else if (indexDesired - indexCurrent >= 1) {
       estimatedTime =
         estimatedTimesForRankDifferences[indexDesired - indexCurrent - 1];
@@ -223,7 +227,7 @@ const calculateTftPrice = (data) => {
     }
   }
   const price = totalPrice;
-  totalPrice = totalPrice * 1.2;
+  totalPrice = totalPrice * 1.4;
 
   return {
     time: estimatedTime,

@@ -4,6 +4,7 @@ const Coach = require('../models/coachModel');
 const coachOrderModel = require('../models/coachOrderModel');
 const boostOrderModel = require('../models/boostOrderModel');
 const tftOrderModel = require('../models/tftOrderModel');
+const { sendOrderConfirmation } = require('./../utils/emailsec');
 
 const sendEmail = require('./../utils/email');
 const calculateTftPrice = require('../utils/calculateTft');
@@ -85,7 +86,6 @@ exports.webhookCheckout = async (req, res) => {
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
   }
-  console.log('Webhook event received:', event);
 
   switch (event.type) {
     case 'checkout.session.completed':
@@ -95,20 +95,6 @@ exports.webhookCheckout = async (req, res) => {
       const data = JSON.parse(checkout.metadata.body);
       const userId = checkout.metadata.userId;
       console.log('Checkout session completed:', data);
-
-      const message = `Thank you for your order ${name}. We've received your payment.
-        We appreciate that you've chosen Boosters Den for serving your needs.
-        If you've any questions or need further assistance, contact our team on Discord
-
-        Best Regards,
-        Boosters Den Team`;
-
-      await sendEmail({
-        email: email,
-        fullName: name,
-        subject: 'Your payment was successfully processed',
-        message,
-      });
 
       if (data.boostType) {
         const {
@@ -161,6 +147,15 @@ exports.webhookCheckout = async (req, res) => {
         try {
           await newBoostOrder.save();
           console.log('Checkout session completed:', data);
+
+          await sendOrderConfirmation({
+            email: email,
+            name: name,
+            dc: discord,
+            type: "Boosting",
+            price: price,
+          });
+
         } catch (err) {
           console.error('Error creating boost order:', err);
           return res.status(400).json({
@@ -201,6 +196,13 @@ exports.webhookCheckout = async (req, res) => {
         });
         try {
           await newOrder.save();
+          await sendOrderConfirmation({
+            email: email,
+            name: name,
+            dc: discord,
+            type: "Coaching",
+            price: price,
+          });
           console.log('newOrder', newOrder);
         } catch (err) {
           res.status(400).json({
@@ -243,6 +245,15 @@ exports.webhookCheckout = async (req, res) => {
 
         try {
           await newTftOrder.save();
+          
+          await sendOrderConfirmation({
+            email: email,
+            name: name,
+            dc: discord,
+            type: "Boosting",
+            price: price,
+          });
+
           console.log('Checkout session completed:', data);
         } catch (err) {
           console.error('Error creating boost order:', err);

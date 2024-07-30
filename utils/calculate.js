@@ -263,6 +263,7 @@ const calculatePrice = (data) => {
   totalPrice = totalPrice * 1.4;
   if (additionalWin) {
     totalPrice += 7;
+    price += 7;
   }
 
   return {

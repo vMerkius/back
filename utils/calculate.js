@@ -259,13 +259,12 @@ const calculatePrice = (data) => {
       totalPrice -= discountFinal;
     }
   }
-  const price = totalPrice;
-  totalPrice = totalPrice * 1.4;
 
   if (additionalWin) {
-    totalPrice = parseInt(totalPrice) + 7;
-    price = parseInt(price) + 7;
+    totalPrice += 7;
   }
+  const price = totalPrice;
+  totalPrice = totalPrice * 1.4;
 
   return {
     time: estimatedTime,

@@ -199,7 +199,7 @@ const calculatePrice = (data) => {
   }
 
   if (!solo) {
-    totalPrice *= 0.5;
+    totalPrice *= 1.5;
   }
   if (additionalWin) {
     totalPrice += 7;

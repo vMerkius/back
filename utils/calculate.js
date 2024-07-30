@@ -201,9 +201,7 @@ const calculatePrice = (data) => {
   if (!solo) {
     totalPrice *= 1.5;
   }
-  if (additionalWin) {
-    totalPrice += 7;
-  }
+
   if (streamed) {
     totalPrice *= 1.2;
   }
@@ -263,6 +261,9 @@ const calculatePrice = (data) => {
   }
   const price = totalPrice;
   totalPrice = totalPrice * 1.4;
+  if (additionalWin) {
+    totalPrice += 7;
+  }
 
   return {
     time: estimatedTime,

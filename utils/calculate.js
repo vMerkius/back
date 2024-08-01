@@ -95,14 +95,14 @@ const estimatedTimesForRankDifferences = [
   '29-44 days',
 ];
 const bonusWinPrices = {
-  Iron: '2',
-  Bronze: '3',
-  Silver: '4',
-  Gold: '5',
-  Platinum: '6',
-  Emerald: '8',
-  Diamond: '16',
-  Master: '24',
+  Iron: 2,
+  Bronze: 3,
+  Silver: 4,
+  Gold: 5,
+  Platinum: 6,
+  Emerald: 8,
+  Diamond: 16,
+  Master: 24,
 };
 
 const calculatePrice = (data) => {

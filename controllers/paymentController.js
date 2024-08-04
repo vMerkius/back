@@ -35,20 +35,31 @@ exports.createCheckoutSession = async (req, res, next) => {
   const userId = JSON.parse(Buffer.from(userToken, 'base64').toString()).id;
   console.log('userId', userId);
 
-  let price, totalPrice, discountFinal;
+  let price, totalPrice, discountFinal, type;
 
   if (req.body.boostType) {
     ({ price, totalPrice, discountFinal, time } = await calculatePrice(
       req.body
     ));
+    type = 'Boosting';
   } else if (req.body.hours) {
     ({ price, totalPrice, discountFinal } = await calculateCoachPrice(
       req.body
     ));
+    type = 'Coaching';
   } else {
     ({ price, totalPrice, discountFinal } = await calculateTftPrice(req.body));
+    type = 'Boosting';
   }
   const data = { ...req.body, price, totalPrice, discountFinal };
+
+  let productDataName;
+  if(type === 'Boosting') {
+    productDataName = `Boosting: ${req.body.rankCurrent} - ${req.body.rankDesired} | Discord: ${req.body.discord}`;
+  }
+  else if(type === 'Coaching') {
+    productDataName = `Coaching: ${req.body.hours} hours | Discord: ${req.body.discord}`;
+  }
 
   const session = await stripe.checkout.sessions.create({
     line_items: [
@@ -56,7 +67,7 @@ exports.createCheckoutSession = async (req, res, next) => {
         price_data: {
           currency: 'eur',
           product_data: {
-            name: 'Example Product',
+            name: productDataName,
           },
           unit_amount: Math.round(price * 100),
         },
@@ -245,7 +256,7 @@ exports.webhookCheckout = async (req, res) => {
 
         try {
           await newTftOrder.save();
-          
+
           await sendOrderConfirmation({
             email: email,
             name: name,

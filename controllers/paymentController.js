@@ -8,10 +8,11 @@ const { sendOrderConfirmation } = require('./../utils/emailsec');
 
 const sendEmail = require('./../utils/email');
 const calculateTftPrice = require('../utils/calculateTft');
-const stripe = require('stripe')(
-  'sk_test_51PKegpJgnjmSEwtWzSLGgusDnp4w9jqfNplnuREYazayY8Q5RlpjwoLGsWZtHwz3O5pjmHkzG7IqoPWuXAHv2HhR00AUbWvaH8'
-);
-const endpointSecret = 'whsec_HXHBMnbgvq9MWYJrWy6U9fdnWSVP7ke2';
+
+const STRIPE_API_KEY = process.env.STRIPE_API_KEY;
+const STRIPE_ENDPOINT_KEY = process.env.STRIPE_ENDPOINT_KEY;
+
+const stripe = require('stripe')(STRIPE_API_KEY);
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -96,7 +97,7 @@ exports.webhookCheckout = async (req, res) => {
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(payload, sig, STRIPE_ENDPOINT_KEY);
   } catch (err) {
     res.status(400).send(`Webhook Error: ${err.message}`);
   }

@@ -58,7 +58,7 @@ exports.createCheckoutSession = async (req, res, next) => {
 
   let productDataName;
   if(type === 'Boosting') {
-    productDataName = `Boosting: ${rankCurrent.rank}${rankCurrent.division}:${rankCurrent.lp} LP - ${rankDesired.rank}${rankDesired.division}:${rankDesired.lp} | Discord: ${req.body.discord}`;
+    productDataName = `Boosting: ${rankCurrent.rank} ${rankCurrent.division}: ${rankCurrent.lp} - ${rankDesired.rank} ${rankDesired.division}: ${rankDesired.lp}  Discord: ${req.body.discord}`;
   }
   else if(type === 'Coaching') {
     productDataName = `Coaching: ${req.body.hours} hours | Discord: ${req.body.discord}`;

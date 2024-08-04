@@ -61,7 +61,7 @@ exports.createCheckoutSession = async (req, res, next) => {
     productDataName = `Boosting: ${rankCurrent.rank} ${rankCurrent.division}: ${rankCurrent.lp} - ${rankDesired.rank} ${rankDesired.division}: ${rankDesired.lp}  Discord: ${req.body.discord}`;
   }
   else if(type === 'Coaching') {
-    productDataName = `Coaching: ${req.body.hours} hours | Discord: ${req.body.discord}`;
+    productDataName = `Coaching: ${req.body.hours} hours  Discord: ${req.body.discord}`;
   }
 
   const session = await stripe.checkout.sessions.create({

@@ -53,9 +53,12 @@ exports.createCheckoutSession = async (req, res, next) => {
   }
   const data = { ...req.body, price, totalPrice, discountFinal };
 
+  const rankCurrent = req.body.rankCurrent;
+  const rankDesired = req.body.rankDesired;
+
   let productDataName;
   if(type === 'Boosting') {
-    productDataName = `Boosting: ${req.body.rankCurrent} - ${req.body.rankDesired} | Discord: ${req.body.discord}`;
+    productDataName = `Boosting: ${rankCurrent.rank}${rankCurrent.division}:${rankCurrent.lp} LP - ${rankDesired.rank}${rankDesired.division}:${rankDesired.lp} | Discord: ${req.body.discord}`;
   }
   else if(type === 'Coaching') {
     productDataName = `Coaching: ${req.body.hours} hours | Discord: ${req.body.discord}`;

@@ -94,6 +94,16 @@ const estimatedTimesForRankDifferences = [
   '24-36 days',
   '29-44 days',
 ];
+const bonusWinPrices = {
+  Iron: 2,
+  Bronze: 3,
+  Silver: 4,
+  Gold: 5,
+  Platinum: 6,
+  Emerald: 8,
+  Diamond: 16,
+  Master: 24,
+};
 
 const calculatePrice = (data) => {
   const {
@@ -199,11 +209,9 @@ const calculatePrice = (data) => {
   }
 
   if (!solo) {
-    totalPrice *= 0.5;
+    totalPrice *= 1.5;
   }
-  if (additionalWin) {
-    totalPrice += 7;
-  }
+
   if (streamed) {
     totalPrice *= 1.2;
   }
@@ -260,6 +268,10 @@ const calculatePrice = (data) => {
       discountFinal = totalPrice * (discountCodeFound.discount / 100);
       totalPrice -= discountFinal;
     }
+  }
+
+  if (additionalWin) {
+    totalPrice += bonusWinPrices[rankDesired.rank];
   }
   const price = totalPrice;
   totalPrice = totalPrice * 1.4;

@@ -90,7 +90,7 @@ const sendOrderConfirmation = async (options) => {
       .setTo(recipients)
       .setReplyTo(setFrom)
       .setPersonalization(personalization)
-      .setSubject("Forgot Your Password?")
+      .setSubject("Payment Successful!")
       .setTemplateId('x2p0347kk9ylzdrn')
   
   await mailerSend.email.send(emailParams);

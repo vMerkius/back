@@ -74,7 +74,7 @@ exports.orderCoach = async (req, res) => {
       message: 'User is not logged in',
     });
   }
-  const { _id, hours, priority, server } = req.body;
+  const { _id, hours, priority, server, discord } = req.body;
   const userToken = token.split('.')[1];
   const userId = JSON.parse(Buffer.from(userToken, 'base64').toString()).id;
 
@@ -92,6 +92,7 @@ exports.orderCoach = async (req, res) => {
     priority,
     server,
     hours,
+    discord,
     done: false,
   });
   try {

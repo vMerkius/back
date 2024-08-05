@@ -6,6 +6,10 @@ const coachOrderSchema = new mongoose.Schema({
   priority: { type: Boolean },
   server: { type: String, required: [true, 'Please provide a server'] },
   hours: { type: Number, required: [true, 'Please provide hours'] },
+  discord: {
+    type: String,
+    required: [true, 'Please provide a Discord username'],
+  },
   done: { type: Boolean },
   price: { type: Number },
   discountFinal: { type: Number },

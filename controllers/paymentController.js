@@ -58,10 +58,9 @@ exports.createCheckoutSession = async (req, res, next) => {
   const rankDesired = req.body.rankDesired;
 
   let productDataName;
-  if(type === 'Boosting') {
+  if (type === 'Boosting') {
     productDataName = `Boosting: ${rankCurrent.rank} ${rankCurrent.division}: ${rankCurrent.lp} - ${rankDesired.rank} ${rankDesired.division}: ${rankDesired.lp}  Discord: ${req.body.discord}`;
-  }
-  else if(type === 'Coaching') {
+  } else if (type === 'Coaching') {
     productDataName = `Coaching: ${req.body.hours} hours  Discord: ${req.body.discord}`;
   }
 
@@ -167,10 +166,9 @@ exports.webhookCheckout = async (req, res) => {
             email: email,
             name: name,
             dc: discord,
-            type: "Boosting",
+            type: 'Boosting',
             price: price,
           });
-
         } catch (err) {
           console.error('Error creating boost order:', err);
           return res.status(400).json({
@@ -185,7 +183,7 @@ exports.webhookCheckout = async (req, res) => {
           hours,
           priority,
           server,
-
+          discord,
           price,
           discountFinal,
           totalPrice,
@@ -207,6 +205,7 @@ exports.webhookCheckout = async (req, res) => {
           priority,
           server,
           hours,
+          discord,
           done: false,
         });
         try {
@@ -215,7 +214,7 @@ exports.webhookCheckout = async (req, res) => {
             email: email,
             name: name,
             dc: discord,
-            type: "Coaching",
+            type: 'Coaching',
             price: price,
           });
           console.log('newOrder', newOrder);
@@ -265,7 +264,7 @@ exports.webhookCheckout = async (req, res) => {
             email: email,
             name: name,
             dc: discord,
-            type: "Boosting",
+            type: 'Boosting',
             price: price,
           });
 

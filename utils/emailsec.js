@@ -76,11 +76,11 @@ const sendOrderConfirmation = async (options) => {
   const personalization = [
     {
       email: options.email,
-      data: {
-        "dc": options.dc,
-        "name": options.name,
-        "type": options.type,
-        "price": options.price
+      data: {    
+        name: options.name,
+        dc: options.dc,
+        type: options.type,
+        price: options.price
       },
     } 
   ];
